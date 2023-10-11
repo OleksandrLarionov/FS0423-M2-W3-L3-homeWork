@@ -1,3 +1,55 @@
+const thatAllBooks = (books) => {
+	const row = document.getElementById('main-row');
+	books.forEach((book) => {
+		const col = document.createElement('div');
+		col.classList.add('col-12', 'col-lg-3', 'col');
+		const newCard = document.createElement('div');
+		newCard.classList.add('card');
+		newCard.innerHTML = `
+		<img src="${book.img}" class="card-img-top" alt="${book.title}">
+			<div class="card-body d-flex flex-column">
+			<h5 class="card-title">${book.title}</h5>
+			<p class="card-text text-end">${book.price}$</p>
+			<div>
+			<a href="#" class="btn btn-primary" onclick='add(event)'>Add to Cart</a>
+			<a href="#" class="btn btn-primary" onclick='deleteThis(event)'>Go delete</a>
+			</div>
+		`;
+		col.appendChild(newCard);
+		row.appendChild(col);
+	});
+};
+const addToMainCart = (e) => {
+	const title = e.target.parentNode.parentNode.querySelector('h5').innerText;
+	const price = e.target.parentNode.parentNode.querySelector('p').innerText;
+	const mainCart = document.getElementById('main-cart');
+	const optionItem = document.createElement('option');
+	optionItem.classList.add('justify-content-between', 'd-flex', 'my-2');
+	optionItem.innerHTML = `<div class='fw-bold fs-5'>${title}: <span  class='text-primary fs-4 fw-bold'> ${price}$</span></div>
+	<a href="#" class="btn btn-primary" onclick='deleteLi(event)'>Go delete</a>
+	`;
+	mainCart.appendChild(optionItem);
+};
+
+const add = (e) => {
+	const title = e.target.parentNode.parentNode.querySelector('h5').innerText;
+	const price = e.target.parentNode.parentNode.querySelector('p').innerText;
+	const ulCart = document.getElementById('cart');
+	const liCart = document.createElement('li');
+	liCart.classList.add('justify-content-between', 'd-flex', 'my-2');
+	liCart.innerHTML = `<div class='fw-bold fs-5'>${title}: <span  class='text-primary fs-4 fw-bold'> ${price}$</span></div>
+	<a href="#" class="btn btn-primary" onclick='deleteLi(event)'>Go delete</a>
+	`;
+	ulCart.appendChild(liCart);
+};
+// Delete functions
+const deleteThis = (e) => {
+	e.target.closest('.col').remove();
+};
+const deleteLi = (e) => {
+	e.target.closest('li').remove();
+};
+
 fetch(' https://striveschool-api.herokuapp.com/books')
 	.then((res) => {
 		if (res.ok) {
@@ -13,102 +65,8 @@ fetch(' https://striveschool-api.herokuapp.com/books')
 		}
 	})
 	.then((data) => {
-		// Book 1
-		const cardTitle1 = document.getElementById('cardTitle1');
-		const cardPrice1 = document.getElementById('cardPrice1');
-		const card1 = document.getElementById('card1');
-		let add = document.getElementById('add');
-		let drop = document.getElementById('drop');
-		const liCart = () => {
-			const cart = document.getElementById('cart');
-			const myLi = document.createElement('li');
-			myLi.classList.add('product');
-			cart.appendChild(myLi);
-		};
-		console.log('data', data);
-		data.forEach((title) => {});
-		// title
-		cardTitle1.innerHTML = ` ${data[0].title}`;
-		cardPrice1.innerHTML = `Price : ${data[0].price}`;
-		// Buttons
-		add.addEventListener('click', () => {
-			liCart();
-			const list = document.getElementsByClassName('product')[0];
-			list.innerHTML = `Title:${data[0].title}, Price:${data[0].price} <a href="#" class="btn btn-primary" id="drop0">Drop</a>`;
-			const drop0 = document.getElementById('drop0');
-			drop0.addEventListener('click', () => {
-				cart.removeChild(list);
-			});
-		});
-		drop.addEventListener('click', () => {
-			card1.classList.toggle('d-none');
-		});
-		// Book 2
-		const cardTitle2 = document.getElementById('cardTitle2');
-		const cardPrice2 = document.getElementById('cardPrice2');
-		const card2 = document.getElementById('card2');
-		const add2 = document.getElementById('add2');
-		const drop2 = document.getElementById('drop2');
-		// title
-		cardTitle2.innerHTML = ` ${data[1].title}`;
-		cardPrice2.innerHTML = `Price : ${data[1].price}`;
-		// Buttons
-		add2.addEventListener('click', () => {
-			liCart();
-			const list = document.getElementsByClassName('product')[1];
-			list.innerHTML = `Title:${data[1].title}, Price:${data[1].price} <a href="#" class="btn btn-primary" id="drop2">Drop</a>`;
-			const drop2 = document.getElementById('drop2');
-			drop2.addEventListener('click', () => {
-				cart.removeChild(list);
-			});
-		});
-		drop2.addEventListener('click', () => {
-			card2.classList.toggle('d-none');
-		});
-		// Book 3
-		const cardTitle3 = document.getElementById('cardTitle3');
-		const cardPrice3 = document.getElementById('cardPrice3');
-		const card3 = document.getElementById('card3');
-		const add3 = document.getElementById('add3');
-		const drop3 = document.getElementById('drop3');
-		// title
-		cardTitle3.innerHTML = ` ${data[2].title}`;
-		cardPrice3.innerHTML = `Price : ${data[2].price}`;
-		// Buttons
-		add3.addEventListener('click', () => {
-			liCart();
-			const list = document.getElementsByClassName('product')[2];
-			list.innerHTML = `Title:${data[2].title}, Price:${data[2].price} <a href="#" class="btn btn-primary" id="drop3">Drop</a>`;
-			const drop3 = document.getElementById('drop3');
-			drop3.addEventListener('click', () => {
-				cart.removeChild(list);
-			});
-		});
-		drop3.addEventListener('click', () => {
-			card3.classList.toggle('d-none');
-		});
-		// Book 4
-		const cardTitle4 = document.getElementById('cardTitle4');
-		const cardPrice4 = document.getElementById('cardPrice4');
-		const card4 = document.getElementById('card4');
-		const add4 = document.getElementById('add4');
-		const drop4 = document.getElementById('drop4');
-		// title
-		cardTitle4.innerHTML = ` ${data[3].title}`;
-		cardPrice4.innerHTML = `Price : ${data[3].price}`;
-		// Buttons
-		add4.addEventListener('click', () => {
-			liCart();
-			const list = document.getElementsByClassName('product')[3];
-			list.innerHTML = `Title:${data[3].title}, Price:${data[3].price} <a href="#" class="btn btn-primary" id="drop4">Drop</a>`;
-			const drop4 = document.getElementById('drop4');
-			drop4.addEventListener('click', () => {
-				cart.removeChild(list);
-			});
-		});
-		drop4.addEventListener('click', () => {
-			card4.classList.toggle('d-none');
-		});
+		console.log(data);
+		thatAllBooks(data);
 	})
 
 	.catch((err) => {
