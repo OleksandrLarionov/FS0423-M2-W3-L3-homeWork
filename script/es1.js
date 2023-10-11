@@ -34,9 +34,9 @@ fetch(' https://striveschool-api.herokuapp.com/books')
 		add.addEventListener('click', () => {
 			liCart();
 			const list = document.getElementsByClassName('product')[0];
-			list.innerHTML = `Title:${data[0].title}, Price:${data[0].price} <a href="#" class="btn btn-primary" id="drop2">Drop</a>`;
-			const drop2 = document.getElementById('drop2');
-			drop2.addEventListener('click', () => {
+			list.innerHTML = `Title:${data[0].title}, Price:${data[0].price} <a href="#" class="btn btn-primary" id="drop0">Drop</a>`;
+			const drop0 = document.getElementById('drop0');
+			drop0.addEventListener('click', () => {
 				cart.removeChild(list);
 			});
 		});
