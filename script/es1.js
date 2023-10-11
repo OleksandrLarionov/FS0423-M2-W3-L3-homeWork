@@ -2,33 +2,25 @@ const thatAllBooks = (books) => {
 	const row = document.getElementById('main-row');
 	books.forEach((book) => {
 		const col = document.createElement('div');
-		col.classList.add('col-12', 'col-lg-3', 'col');
+		col.classList.add('col-12', 'col-lg-3', 'col', 'film', 'shadow-lg');
 		const newCard = document.createElement('div');
-		newCard.classList.add('card');
+		newCard.style.height = '620px';
+		newCard.classList.add('card', 'my-1');
 		newCard.innerHTML = `
-		<img src="${book.img}" class="card-img-top" alt="${book.title}">
-			<div class="card-body d-flex flex-column">
+		<img src="${book.img}" height = '400px' class="card-img-top" alt="${book.title}">
+			<div class="card-body d-flex flex-column justify-content-between">
 			<h5 class="card-title">${book.title}</h5>
-			<p class="card-text text-end">${book.price}$</p>
+			<p class="card-text text-end"><span class='text-primary fw-bold'>Price</span>: ${
+				parseInt(book.price * 100) / 100
+			}$</p>
 			<div>
 			<a href="#" class="btn btn-primary" onclick='add(event)'>Add to Cart</a>
-			<a href="#" class="btn btn-primary" onclick='deleteThis(event)'>Go delete</a>
+			<a href="#" class="btn btn-secondary" onclick='deleteThis(event)'>Go delete</a>
 			</div>
 		`;
 		col.appendChild(newCard);
 		row.appendChild(col);
 	});
-};
-const addToMainCart = (e) => {
-	const title = e.target.parentNode.parentNode.querySelector('h5').innerText;
-	const price = e.target.parentNode.parentNode.querySelector('p').innerText;
-	const mainCart = document.getElementById('main-cart');
-	const optionItem = document.createElement('option');
-	optionItem.classList.add('justify-content-between', 'd-flex', 'my-2');
-	optionItem.innerHTML = `<div class='fw-bold fs-5'>${title}: <span  class='text-primary fs-4 fw-bold'> ${price}$</span></div>
-	<a href="#" class="btn btn-primary" onclick='deleteLi(event)'>Go delete</a>
-	`;
-	mainCart.appendChild(optionItem);
 };
 
 const add = (e) => {
@@ -36,10 +28,11 @@ const add = (e) => {
 	const price = e.target.parentNode.parentNode.querySelector('p').innerText;
 	const ulCart = document.getElementById('cart');
 	const liCart = document.createElement('li');
-	liCart.classList.add('justify-content-between', 'd-flex', 'my-2');
-	liCart.innerHTML = `<div class='fw-bold fs-5'>${title}: <span  class='text-primary fs-4 fw-bold'> ${price}$</span></div>
-	<a href="#" class="btn btn-primary" onclick='deleteLi(event)'>Go delete</a>
+	liCart.classList.add('justify-content-between', 'd-flex', 'm-2');
+	liCart.innerHTML = `<div class='fw-bold fs-5'>${title}: <span  class='text-primary fs-4 fw-bold'> ${price}</span></div>
+	<a href="#" class="btn btn-danger mx-3" onclick='deleteLi(event)'>Go delete</a>
 	`;
+
 	ulCart.appendChild(liCart);
 };
 // Delete functions
